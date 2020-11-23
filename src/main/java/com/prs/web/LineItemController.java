@@ -13,7 +13,7 @@ import com.prs.db.LineItemRepo;
 
 @CrossOrigin
 @RestController
-@LineItemMapping("/lineItems")
+@RequestMapping("/lineItems")
 public class LineItemController {
 	/*
 	 * A controller will implement 5 CRUD methods: 1) GET ALL 2) GET BY ID 3) POST -
@@ -25,24 +25,24 @@ public class LineItemController {
 
 	@GetMapping("/")
 	public List<LineItem> getAll() {
-		returnlineItemRepo.findAll();
+		return lineItemRepo.findAll();
 	}
 
 	@GetMapping("/{id}")
 	public Optional<LineItem> getById(@PathVariable int id) {
-		returnlineItemRepo.findById(id);
+		return lineItemRepo.findById(id);
 	}
 
 	// Add alineItem
 	@PostMapping("/")
-	public LineItem addLineItem(@LineItemBody LineItem u) {
+	public LineItem addLineItem(@RequestBody LineItem u) {
 		u = lineItemRepo.save(u);
 		return u;
 	}
 
 	// Update alineItem
 	@PutMapping("/")
-	public LineItem updateLineItem(@LineItemBody LineItem u) {
+	public LineItem updateLineItem(@RequestBody LineItem u) {
 		u = lineItemRepo.save(u);
 		return u;
 	}
@@ -51,8 +51,8 @@ public class LineItemController {
 	@DeleteMapping("/{id}")
 	public LineItem deleteLineItem(@PathVariable int id) {
 		// Optional type will wrap alineItem
-		Optional<LineItem> u = LineItemRepo.findById(id);
-		// isPresent() will return true if alineItem was found
+		Optional<LineItem> u = lineItemRepo.findById(id);
+		// isPresent() will return true if a lineItem was found
 		if (u.isPresent()) {
 			lineItemRepo.deleteById(id);
 		} else {
