@@ -1,21 +1,29 @@
 package com.prs.business;
 
-public class LineItem {
+import javax.persistence.*;
 
+@Entity
+public class LineItem {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int requestId;
-	private int productID;
+	@ManyToOne
+	@JoinColumn(name = "requestId")
+	private Request request;
+	@ManyToOne
+	@JoinColumn(name = "productId")
+	private Product product;
 	private int quantity;
-	
 	public LineItem() {
+	
 		super();
 	}
-
-	public LineItem(int id, int requestId, int productID, int quantity) {
+	
+	public LineItem(int id, Request request, Product product, int quantity) {
 		super();
 		this.id = id;
-		this.requestId = requestId;
-		this.productID = productID;
+		this.request = request;
+		this.product = product;
 		this.quantity = quantity;
 	}
 
@@ -27,20 +35,20 @@ public class LineItem {
 		this.id = id;
 	}
 
-	public int getRequestId() {
-		return requestId;
+	public Request getRequest() {
+		return request;
 	}
 
-	public void setRequestId(int requestId) {
-		this.requestId = requestId;
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 
-	public int getProductID() {
-		return productID;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProductID(int productID) {
-		this.productID = productID;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public int getQuantity() {
@@ -51,6 +59,5 @@ public class LineItem {
 		this.quantity = quantity;
 	}
 	
-	
-	
 }
+	
