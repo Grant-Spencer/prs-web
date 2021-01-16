@@ -15,19 +15,22 @@ import com.prs.db.UserRepo;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
 	/*
 	 * A controller will implement 5 CRUD methods: 1) GET ALL 2) GET BY ID 3) POST -
-	 * Insert 4) PUT - Update 5) DELETE - delete
+	 * INSERT 4) PUT - UPDATE 5) DELETE - DELETE
 	 */
 
 	@Autowired
 	private UserRepo userRepo;
 
+	// Get all users
 	@GetMapping("/")
 	public List<User> getAll() {
 		return userRepo.findAll();
 	}
 
+	// Get a user by id
 	@GetMapping("/{id}")
 	public Optional<User> getById(@PathVariable int id) {
 		return userRepo.findById(id);
@@ -59,18 +62,16 @@ public class UserController {
 			System.out.println("Error - user not found for id " + id);
 		}
 		return u.get();
-
 	}
 
-	// Post Mapping - Get User by User name and Password
+	// Post Mapping - Get User by Username and Password
 	@PostMapping("/login")
 	public Optional<User> login(@RequestBody User u) {
-		Optional<User> user = userRepo.findByUsernameAndPassword(u.getUsername(), u.getPassword());
+		Optional<User> user = userRepo.findByUserNameAndPassword(u.getUserName(), u.getPassword());
 		if (user.isPresent()) {
 			return user;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
-
 	}
 }
