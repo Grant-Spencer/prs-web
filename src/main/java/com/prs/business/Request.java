@@ -1,5 +1,7 @@
 package com.prs.business;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 import javax.persistence.GenerationType;
 
@@ -115,6 +117,11 @@ public class Request {
 
 	public void setReasonForRejection(String reasonForRejection) {
 		this.reasonForRejection = reasonForRejection;
+	}
+
+	public void setSubmittedDate(LocalDateTime now) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

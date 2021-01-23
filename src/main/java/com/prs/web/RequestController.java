@@ -1,5 +1,6 @@
 package com.prs.web;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +33,18 @@ public class RequestController {
 	public Optional<Request> getById(@PathVariable int id) {
 		return requestRepo.findById(id);
 	}
+	
+	// Get request review
+	@GetMapping("/list-review/{id}")
+	public Optional<Request> reviewRequest(@PathVariable int id) {
+		return requestRepo.findByUserIdNotAndStatus(id, "Review");
+	}
 
 	// Add a request
 	@PostMapping("/")
 	public Request addRequest(@RequestBody Request u) {
+		u.setStatus("New");
+		u.setSubmittedDate(LocalDateTime.now());
 		u = requestRepo.save(u);
 		return u;
 	}
@@ -61,7 +70,38 @@ public class RequestController {
 		return u.get();
 
 	}
+	
+	// request review
+	@PutMapping("/submit-review")
+	public Request submitForReview(@RequestBody Request u) {
+		if (u.getTotal() <= 50.00) {
+			u.setStatus("Approved");
+		} else {
+			u.setStatus("Review");
+		}
+		u.setSubmittedDate(LocalDateTime.now());
+		u = requestRepo.save(u);
+		return u;
+		}
+	
+
+	// requuest Approve
+
+	@PutMapping("/approve")
+	public Request approveRequest(@RequestBody Request u) {
+		u.setStatus("Approved");
+		u = requestRepo.save(u);
+		return u;
+		}
+		
+	@PutMapping("/reject")
+	public Request rejectRequest(@RequestBody Request u) {
+		u.setStatus("Rejected");
+		u = requestRepo.save(u);
+		return u; }
+}
+		
 
 	
-	}
+	
 

@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prs.business.LineItem;
+import com.prs.business.Product;
+import com.prs.business.Request;
 import com.prs.db.LineItemRepo;
+import com.prs.db.RequestRepo;
 
 @CrossOrigin
 @RestController
@@ -28,6 +31,9 @@ public class LineItemController {
 
 	@Autowired
 	private LineItemRepo lineItemRepo;
+	
+	@Autowired
+	private RequestRepo requestRepo;
 
 	@GetMapping("/")
 	public List<LineItem> getAll() {
@@ -43,6 +49,7 @@ public class LineItemController {
 	@PostMapping("/")
 	public LineItem addLineItem(@RequestBody LineItem u) {
 		u = lineItemRepo.save(u);
+		recalculateTotal(u);
 		return u;
 	}
 
@@ -67,5 +74,23 @@ public class LineItemController {
 		return u.get();
 
 	}
-
+	@GetMapping("/lines-for-pr/{id}")
+	public List<LineItem> getLineItembyPr(@PathVariable int id) {
+		return lineItemRepo.findByRequestId(id);
+	}
+	
+	// loop and total new sum
+		public void recalculateTotal(LineItem u) {	
+			List<LineItem> lineItems = lineItemRepo.findByRequestId(u.getRequest().getId());
+			
+			double total = 0.0;
+			for(LineItem lineItem : lineItems) {
+				Product p = lineItem.getProduct();
+				total += (p.getPrice() * lineItem.getQuantity());
+			}
+			
+			Request request = u.getRequest();
+			request.setTotal(total);
+			requestRepo.save(request);
+}
 }
