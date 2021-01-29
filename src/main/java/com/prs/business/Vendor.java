@@ -16,14 +16,14 @@ public class Vendor {
 	private String city;
 	private String state;
 	private int zip;
-	private String phonenumber;
+	private String phoneNumber;
 	private String email;
 
 	public Vendor() {
 		super();
 	}
 
-	public Vendor(int id, String code, String name, String address, String city, String state, int zip, String phonenumber,
+	public Vendor(int id, String code, String name, String address, String city, String state, int zip, String phoneNumber,
 			String email) {
 		super();
 		this.id = id;
@@ -33,7 +33,7 @@ public class Vendor {
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phoneNumber;
 		this.email = email;
 	}
 
@@ -93,12 +93,12 @@ public class Vendor {
 		this.zip = zip;
 	}
 
-	public String getPhonenumber() {
-		return phonenumber;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getEmail() {

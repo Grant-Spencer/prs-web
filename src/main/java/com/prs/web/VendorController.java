@@ -35,9 +35,10 @@ public class VendorController {
 
 	// Add a vendor
 	@PostMapping("/")
-	public Vendor addVendor(@RequestBody Vendor u) {
-		u = vendorRepo.save(u);
-		return u;
+	public Vendor addVendor(@RequestBody Vendor v) {
+		System.out.println("Add Vendor "+ v);
+		v = vendorRepo.save(v);
+				return v;
 	}
 
 	// Update a vendor
